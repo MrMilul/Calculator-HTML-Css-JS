@@ -9,16 +9,60 @@
      <script>
           $(document).ready(function (){
                var memory = 0;
+               var secondmemory = 0;
+               var flag = false;
+               var calcvalue = '';
+               // var calc = 0;
                $('.digit').click(function(event){
-                    memory += event.target.value
-                    $("#screen").val(memory)
-                    if ($("#screen").val().length > 12){
-                         $("#screen").css("font-size", "16px")
+                    if(!flag){
+                         memory += event.target.value
+                         $("#screen").val(+memory)
+                        
+                                           
+                    }else{
+                         secondmemory += event.target.value
+                         $("#screen").val(+secondmemory)
+                         
                     }
+                    
                })
+               $("#equal").click(function (){
+                    var calc = 0
+                    switch (calcvalue) {
+                         case '+':
+                              calc = parseInt(memory) + parseInt(secondmemory)
+                           
+                         break;
+                         case '*':
+                              calc = parseInt(memory) * parseInt(secondmemory)
+                             
+                         break;
+                         case '/':
+                              calc = parseInt(memory) / parseInt(secondmemory)
+                           
+                         break;
+                         case '-':
+                              calc = parseInt(memory) - parseInt(secondmemory)
+                              
+                         break;
+                    }
+                    $("#screen").val(calc)
+                    memory = 0; 
+                    secondmemory = 0;
+                    flag = false
+                   
+               })
+               $("#multyply, #minus, #divide, #add").click(function(event){
+                    calcvalue = event.target.value
+                    flag = true;            
+
+               })
+
                $('#clear').click(function (){
                     $('#screen').val('0')
                     memory = 0;
+                    secondmemory = 0;
+                    flag = false;
                })
                $('#backspace').click(function (){
                     var len = $('#screen').val().length
@@ -32,11 +76,11 @@
                     var sign = ($("#screen").val() * -1)
                     $("#screen").val(sign)
                })
-               $("#percentage").click(function (){
-                    var sec = $("#screen").val()
-                    var per = (sec  / 100)
-                    $("#screen").val(per)
-               })
+               // $("#percentage").click(function (){
+               //      var sec = $("#screen").val()
+               //      var per = (sec  / 100)
+               //      $("#screen").val(per)
+               // })
           })
      </script>
      
@@ -48,7 +92,7 @@
           <button id='clear' value='c'>C</button>
           <button id='backspace' value='-'>&#8592;</button>
           <button id='sign' value='+-'>&#8723;</button>
-          <button id='percentage' value='%'>%</button>
+          <button id='add' value='+'>+</button>
           <button class='digit' value='7'>7</button>
           <button class='digit' value='8'>8</button>
           <button class='digit' value='9'>9</button>
@@ -65,12 +109,6 @@
           <button class='digit' value='.'>.</button>
           <button id='equal' value='='>=</button>
      </div>
-     </div>
-     <script>
-         
-                                
-       
-     </script>
-          
+     </div>          
 </body>
 </html>
